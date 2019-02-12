@@ -1,6 +1,7 @@
 package acs.centraldogma
 
-enum class BaseEnum {
+enum class Base {
+
     A,
     C,
     G,

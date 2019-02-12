@@ -1,6 +1,6 @@
 package acs.centraldogma
 
-enum class AminoEnum {
+enum class Amino {
 
     Ala,
     Ile,
@@ -21,5 +21,6 @@ enum class AminoEnum {
     His,
     Lys,
     Gly,
-    Pro
+    Pro,
+    STOP
 }

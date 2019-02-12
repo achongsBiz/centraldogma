@@ -12,10 +12,22 @@ class CentraldogmaApplicationTests {
 
 	@Test
 	fun `Correct Translation from DNA to RNA`() {
-		val testDNACodon = DNACodon(BaseEnum.A, BaseEnum.G, BaseEnum.C)
-		val expectedRNAOutput = listOf(BaseEnum.U, BaseEnum.C, BaseEnum.G)
-        assertThat(testDNACodon.outputRNASequence).isEqualTo(expectedRNAOutput)
+		val firstTestDNACodon = DNACodon(Base.A, Base.G, Base.C)
+		val firstExpectedRNAOutput = listOf(Base.U, Base.C, Base.G)
+        assertThat(firstTestDNACodon.outputRNASequence).isEqualTo(firstExpectedRNAOutput)
+
+		val secondTestDNACodon = DNACodon(Base.U, Base.C, Base.G)
+		val secondExpectedRNAOutput = listOf(Base.A, Base.G, Base.C)
+		assertThat(secondTestDNACodon.outputRNASequence).isEqualTo(secondExpectedRNAOutput)
 	}
+
+	@Test
+	fun `Correct Translation from RNA to Amino Acid`() {
+		
+
+
+	}
+
 
 }
 

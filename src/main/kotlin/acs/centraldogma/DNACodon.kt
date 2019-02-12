@@ -1,27 +1,27 @@
 package acs.centraldogma
 
-class DNACodon (override val firstElement : BaseEnum,
-                override val secondElement : BaseEnum,
-                override val thirdElement : BaseEnum
-): Codon {
+class DNACodon (firstElement : Base,
+                secondElement : Base,
+                thirdElement : Base
+) {
 
-    val baseSequence : ArrayList<BaseEnum>  = arrayListOf(firstElement, secondElement, thirdElement)
-    val outputRNASequence: ArrayList<BaseEnum> = arrayListOf()
+    val baseSequence : ArrayList<Base>  = arrayListOf(firstElement, secondElement, thirdElement)
+    val outputRNASequence: ArrayList<Base> = arrayListOf()
 
     init {
 
         baseSequence.forEach {outputRNASequence.add(translateToRNA(it))}
     }
 
-    fun translateToRNA(base : BaseEnum) : BaseEnum {
+    fun translateToRNA(base : Base) : Base {
 
-        var antiCodon = BaseEnum.X
+        var antiCodon = Base.X
 
         val outputMatrix = mapOf(
-                BaseEnum.A to BaseEnum.U,
-                BaseEnum.U to BaseEnum.A,
-                BaseEnum.G to BaseEnum.C,
-                BaseEnum.C to BaseEnum.G
+                Base.A to Base.U,
+                Base.U to Base.A,
+                Base.G to Base.C,
+                Base.C to Base.G
         )
 
         for (entry in outputMatrix)
