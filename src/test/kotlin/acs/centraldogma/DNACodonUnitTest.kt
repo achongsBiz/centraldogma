@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class CentraldogmaApplicationTests {
+class DNACodonUnitTest {
 
 	@Test
 	fun `Correct Translation from DNA to RNA`() {
@@ -22,12 +22,14 @@ class CentraldogmaApplicationTests {
 	}
 
 	@Test
-	fun `Correct Translation from RNA to Amino Acid`() {
-		
+	fun `Correct Translation from DNA to DNA`() {
+		val firstTestDNACodon = DNACodon(Base.A, Base.G, Base.C)
+		val firstExpectedDNAOutput = listOf(Base.T, Base.C, Base.G)
+		assertThat(firstTestDNACodon.outputDNASequence).isEqualTo(firstExpectedDNAOutput)
 
-
+		val secondTestDNACodon = DNACodon(Base.A, Base.G, Base.C)
+		val secondExpectedDNAOutput = listOf(Base.T, Base.C, Base.G)
+		assertThat(secondTestDNACodon.outputDNASequence).isEqualTo(secondExpectedDNAOutput)
 	}
-
-
 }
 
