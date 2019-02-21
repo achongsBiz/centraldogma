@@ -1,9 +1,11 @@
 package acs.centraldogma
 
-class DNACodon (firstElement : Base,
-                secondElement : Base,
-                thirdElement : Base
+class DNACodon (tripleSequence : String
 ) {
+
+    val firstElement = Base.valueOf(tripleSequence.substring(0,1))
+    val secondElement = Base.valueOf(tripleSequence.substring(1,2))
+    val thirdElement = Base.valueOf(tripleSequence.substring(2,3))
 
     val baseSequence : ArrayList<Base>  = arrayListOf(firstElement, secondElement, thirdElement)
     val outputRNASequence: ArrayList<Base> = arrayListOf()
@@ -41,7 +43,7 @@ class DNACodon (firstElement : Base,
 
         val outputMatrix = mapOf(
                 Base.A to Base.U,
-                Base.U to Base.A,
+                Base.T to Base.A,
                 Base.G to Base.C,
                 Base.C to Base.G
         )

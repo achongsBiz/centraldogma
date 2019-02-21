@@ -21,12 +21,26 @@ class MainControllerTest {
         val a  = MainController()
         val preparedSequence = a.prepSequence(DNAWebObject("ATGCGGTTAA", "dna"))
 
-        assertThat(preparedSequence.path("length").asInt()).isEqualTo(10)
-        assertThat(preparedSequence.path("modulo").asInt()).isEqualTo(1)
-        assertThat(preparedSequence.path("totalCodons").asInt()).isEqualTo(3)
-        assertThat(preparedSequence.path("totalParsedLength").asInt()).isEqualTo(9)
-        assertThat(preparedSequence.path("unParsedSequence").textValue()).isEqualTo("A")
-        assertThat(preparedSequence.path("parsedSequence").textValue()).isEqualTo("ATGCGGTTA")
+        assertThat(preparedSequence.length).isEqualTo(10)
+        assertThat(preparedSequence.modulo).isEqualTo(1)
+        assertThat(preparedSequence.totalCodons).isEqualTo(3)
+        assertThat(preparedSequence.totalParsedLength).isEqualTo(9)
+        assertThat(preparedSequence.unParsedSequence).isEqualTo("A")
+        assertThat(preparedSequence.parsedSequence).isEqualTo("ATGCGGTTA")
     }
 
+
+    @Test
+    fun `Codon is Parsed`() {
+
+        val x = DNAWebObject("ATGCGGTTAA", "dna")
+
+        val a  = MainController()
+        a.dnaRequest(x)
+
+
+
+
+
+    }
 }

@@ -1,45 +1,67 @@
 package acs.centraldogma
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
+import java.awt.dnd.DnDConstants
 
-@Controller
+@RestController
 class MainController {
-    @GetMapping(value = "/dna")
-    fun dnaRequest(@RequestParam dnaWebObject: DNAWebObject) {
+    @PostMapping(value = "dna")
+    fun dnaRequest(@RequestBody dnaWebObject: DNAWebObject) {
 
-
-    }
-
-    @GetMapping(value = "/rna")
-    fun rnaRequest(@RequestParam rnaWebObject: RNAWebObject) {
+        val dnaSequenceDomainObject = prepSequence(dnaWebObject)
+        val output = evaluateCodons(dnaSequenceDomainObject)
+        println(output)
 
     }
 
-    fun prepSequence(a: DNAWebObject): JsonNode {
+    @PostMapping(value = "/rna")
+    fun rnaRequest(@RequestBody rnaWebObject: RNAWebObject) {
+
+    }
+
+
+    fun prepSequence(a: DNAWebObject): DNASequenceDomainObject {
 
         val length = a.translationSequence.length
         val modulo = length % 3
         val totalCodons = length / 3
         val totalParsedLength = totalCodons * 3
-        val unParsedSequence = a.translationSequence.substring(totalParsedLength)
         val parsedSequence = a.translationSequence.substring(0, totalParsedLength)
+        val unParsedSequence = a.translationSequence.substring(totalParsedLength)
+        val unParsedSequenceLength = unParsedSequence.length
 
-        val outputData = "{" +
-                "\"length\" : \"$length\"," +
-                "\"modulo\" : \"$modulo\"," +
-                "\"totalParsedLength\" : \"$totalParsedLength\"," +
-                "\"unParsedSequence\" : \"$unParsedSequence\"," +
-                "\"parsedSequence\" : \"$parsedSequence\"," +
-                "\"totalCodons\" : \"$totalCodons\"}"
-
-
-        val something : JsonNode = ObjectMapper().readTree(outputData)
-        return something
-
+        return DNASequenceDomainObject(
+                length = length,
+                modulo = modulo,
+                totalCodons = totalCodons,
+                totalParsedLength = totalParsedLength,
+                unParsedLength = unParsedSequenceLength,
+                unParsedSequence = unParsedSequence,
+                parsedSequence = parsedSequence)
     }
 
+    fun evaluateCodons(dnaSequenceDomainObject : DNASequenceDomainObject) : List<String> {
+
+        var i = 0
+        val results : ArrayList<String> = arrayListOf()
+
+        while (i < dnaSequenceDomainObject.totalParsedLength) {
+
+            val codon = dnaSequenceDomainObject.parsedSequence.substring(i, i + 3)
+            println(">$codon")
+
+            val dnaCodon = DNACodon(codon)
+
+            results.add(dnaCodon.outputRNASequence.toString())
+
+            i += 3
+        }
+
+        println("x")
+
+        return results
+    }
 }
