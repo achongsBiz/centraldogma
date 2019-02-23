@@ -12,11 +12,11 @@ class DNACodonUnitTest {
 
 	@Test
 	fun `Correct Translation from DNA to RNA`() {
-		val firstTestDNACodon = DNACodon("AGC")
-		val firstExpectedRNAOutput = listOf(Base.U, Base.C, Base.G)
+		val firstTestDNACodon = DNACodon("AAC")
+		val firstExpectedRNAOutput = listOf(Base.U, Base.U, Base.G)
         assertThat(firstTestDNACodon.outputRNASequence).isEqualTo(firstExpectedRNAOutput)
 
-		val secondTestDNACodon = DNACodon("UCG")
+		val secondTestDNACodon = DNACodon("TCG")
 		val secondExpectedRNAOutput = listOf(Base.A, Base.G, Base.C)
 		assertThat(secondTestDNACodon.outputRNASequence).isEqualTo(secondExpectedRNAOutput)
 	}

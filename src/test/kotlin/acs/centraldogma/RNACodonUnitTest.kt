@@ -12,28 +12,28 @@ class RNACodonUnitTest {
 
     @Test
     fun `Correct Translation from RNA to Amino Acid - First Base Uracil`() {
-        val firstRNACodonTest = RNACodon(arrayListOf(Base.U, Base.U, Base.U))
-        assertThat(firstRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
+//        val firstRNACodonTest = RNACodon("UUG")
+//        assertThat(firstRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
 
-        val secondRNACodonTest = RNACodon(arrayListOf(Base.U, Base.U, Base.C))
-        assertThat(secondRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
+//        val secondRNACodonTest = RNACodon("UUC")
+//        assertThat(secondRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
 
-        val thirdRNACodonTest = RNACodon(arrayListOf(Base.U, Base.U, Base.A))
+        val thirdRNACodonTest = RNACodon("UUA")
         assertThat(thirdRNACodonTest.outputAminoSequence).isEqualTo(Amino.Leu)
 
-        val fourthRNACodonTest = RNACodon(arrayListOf(Base.U, Base.U, Base.G))
+        val fourthRNACodonTest = RNACodon("UUG")
         assertThat(fourthRNACodonTest.outputAminoSequence).isEqualTo(Amino.Leu)
 
-        val fifthRNACodonTest = RNACodon(arrayListOf(Base.U, Base.C, Base.U))
+        val fifthRNACodonTest = RNACodon("UCU")
         assertThat(fifthRNACodonTest.outputAminoSequence).isEqualTo(Amino.Ser)
 
-        val sixthRNACodonTest = RNACodon(arrayListOf(Base.U, Base.C, Base.C))
+        val sixthRNACodonTest = RNACodon("UCC")
         assertThat(sixthRNACodonTest.outputAminoSequence).isEqualTo(Amino.Ser)
 
-        val seventhRNACodonTest = RNACodon(arrayListOf(Base.U, Base.C, Base.A))
+        val seventhRNACodonTest = RNACodon("UCA")
         assertThat(seventhRNACodonTest.outputAminoSequence).isEqualTo(Amino.Ser)
 
-        val eighthRNACodonTest = RNACodon(arrayListOf(Base.U, Base.C, Base.G))
+        val eighthRNACodonTest = RNACodon("UCG")
         assertThat(eighthRNACodonTest.outputAminoSequence).isEqualTo(Amino.Ser)
 
     }

@@ -2,18 +2,19 @@ package acs.centraldogma
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import java.awt.dnd.DnDConstants
 
 @RestController
 class MainController {
     @PostMapping(value = "dna")
-    fun dnaRequest(@RequestBody dnaWebObject: DNAWebObject) {
+    fun dnaRequest(@RequestBody dnaWebObject: DNAWebObject) : ResponseEntity<Any> {
 
         val dnaSequenceDomainObject = prepSequence(dnaWebObject)
-        val output = evaluateCodons(dnaSequenceDomainObject)
-        println(output)
+        val output = evaluateCodons(dnaSequenceDomainObject, dnaWebObject.requestedTranslation)
+
+        val returnObject = DNAReturnObject(output, dnaSequenceDomainObject.unParsedSequence)
+
+        return ResponseEntity(returnObject,HttpStatus.OK)
 
     }
 
@@ -21,7 +22,6 @@ class MainController {
     fun rnaRequest(@RequestBody rnaWebObject: RNAWebObject) {
 
     }
-
 
     fun prepSequence(a: DNAWebObject): DNASequenceDomainObject {
 
@@ -43,24 +43,29 @@ class MainController {
                 parsedSequence = parsedSequence)
     }
 
-    fun evaluateCodons(dnaSequenceDomainObject : DNASequenceDomainObject) : List<String> {
+    fun evaluateCodons(dnaSequenceDomainObject : DNASequenceDomainObject, requestedTranslation : String) : List<String> {
 
         var i = 0
         val results : ArrayList<String> = arrayListOf()
 
-        while (i < dnaSequenceDomainObject.totalParsedLength) {
+            while (i < dnaSequenceDomainObject.totalParsedLength) {
 
-            val codon = dnaSequenceDomainObject.parsedSequence.substring(i, i + 3)
-            println(">$codon")
+                val codon = dnaSequenceDomainObject.parsedSequence.substring(i, i + 3)
 
-            val dnaCodon = DNACodon(codon)
-
-            results.add(dnaCodon.outputRNASequence.toString())
-
-            i += 3
-        }
-
-        println("x")
+                if (requestedTranslation == "dna") {
+                    val dnaCodon = DNACodon(codon)
+                    results.add(dnaCodon.outputDNASequence.toString())
+                }
+                else if (requestedTranslation == "rna") {
+                    val rnaCodon = DNACodon(codon)
+                    results.add(rnaCodon.outputRNASequence.toString())
+                }
+                else if (requestedTranslation == "amino") {
+                    val rnaCodon = DNACodon(codon)
+                    results.add(rnaCodon.outputAmino)
+                }
+                i += 3
+            }
 
         return results
     }

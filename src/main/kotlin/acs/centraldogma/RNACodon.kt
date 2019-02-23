@@ -1,6 +1,6 @@
 package acs.centraldogma
 
-class RNACodon(val rnaSequence: ArrayList<Base>) {
+class RNACodon(val rnaSequence:String) {
 
     var outputAminoSequence = Amino.STOP
 
@@ -9,11 +9,9 @@ class RNACodon(val rnaSequence: ArrayList<Base>) {
         outputAminoSequence = translateToAmino(rnaSequence)
     }
 
-    fun translateToAmino(aminoSequence: ArrayList<Base>) : Amino {
+    fun translateToAmino(rnaSequence : String) : Amino {
 
-        val sequence = rnaSequence[0].toString() + rnaSequence[1].toString() + rnaSequence[2].toString()
-
-        return matchToMatrix(sequence)
+        return matchToMatrix(rnaSequence)
     }
 
 
