@@ -9,13 +9,10 @@ class MainController {
     @PostMapping(value = "dna")
     fun dnaRequest(@RequestBody dnaWebObject: DNAWebObject) : ResponseEntity<Any> {
 
-        val dnaSequenceDomainObject = prepSequence(dnaWebObject)
-        val output = evaluateCodons(dnaSequenceDomainObject, dnaWebObject.requestedTranslation)
-
+        val dnaSequenceDomainObject = prepDNASequence(dnaWebObject)
+        val output = DNARequestOrchestrator(dnaSequenceDomainObject, dnaWebObject.requestedTranslation).evaluateDNACodons()
         val returnObject = DNAReturnObject(output, dnaSequenceDomainObject.unParsedSequence)
-
         return ResponseEntity(returnObject,HttpStatus.OK)
-
     }
 
     @PostMapping(value = "/rna")
@@ -23,7 +20,7 @@ class MainController {
 
     }
 
-    fun prepSequence(a: DNAWebObject): DNASequenceDomainObject {
+    fun prepDNASequence(a: DNAWebObject): DNASequenceDomainObject {
 
         val length = a.translationSequence.length
         val modulo = length % 3
@@ -41,32 +38,5 @@ class MainController {
                 unParsedLength = unParsedSequenceLength,
                 unParsedSequence = unParsedSequence,
                 parsedSequence = parsedSequence)
-    }
-
-    fun evaluateCodons(dnaSequenceDomainObject : DNASequenceDomainObject, requestedTranslation : String) : List<String> {
-
-        var i = 0
-        val results : ArrayList<String> = arrayListOf()
-
-            while (i < dnaSequenceDomainObject.totalParsedLength) {
-
-                val codon = dnaSequenceDomainObject.parsedSequence.substring(i, i + 3)
-
-                if (requestedTranslation == "dna") {
-                    val dnaCodon = DNACodon(codon)
-                    results.add(dnaCodon.outputDNASequence.toString())
-                }
-                else if (requestedTranslation == "rna") {
-                    val rnaCodon = DNACodon(codon)
-                    results.add(rnaCodon.outputRNASequence.toString())
-                }
-                else if (requestedTranslation == "amino") {
-                    val rnaCodon = DNACodon(codon)
-                    results.add(rnaCodon.outputAmino)
-                }
-                i += 3
-            }
-
-        return results
     }
 }

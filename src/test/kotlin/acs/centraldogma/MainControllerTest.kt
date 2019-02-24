@@ -19,7 +19,7 @@ class MainControllerTest {
     fun `Prep sequence should correctly output parsed sections and unparsed sections`() {
 
         val a  = MainController()
-        val preparedSequence = a.prepSequence(DNAWebObject("ATGCGGTTAA", "dna"))
+        val preparedSequence = a.prepDNASequence(DNAWebObject("ATGCGGTTAA", "dna"))
 
         assertThat(preparedSequence.length).isEqualTo(10)
         assertThat(preparedSequence.modulo).isEqualTo(1)
