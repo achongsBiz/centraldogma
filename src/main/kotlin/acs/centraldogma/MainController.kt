@@ -7,20 +7,26 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class MainController {
     @PostMapping(value = "dna")
-    fun dnaRequest(@RequestBody dnaWebObject: DNAWebObject) : ResponseEntity<Any> {
+    fun dnaRequest(@RequestBody webObject: WebObject) : ResponseEntity<Any> {
 
-        val dnaSequenceDomainObject = prepDNASequence(dnaWebObject)
-        val output = DNARequestOrchestrator(dnaSequenceDomainObject, dnaWebObject.requestedTranslation).evaluateDNACodons()
+        val dnaSequenceDomainObject = prepDNASequence(webObject)
+        val output = DNARequestOrchestrator(dnaSequenceDomainObject, webObject.requestedTranslation).evaluateDNACodons()
         val returnObject = DNAReturnObject(output, dnaSequenceDomainObject.unParsedSequence)
         return ResponseEntity(returnObject,HttpStatus.OK)
     }
 
     @PostMapping(value = "/rna")
-    fun rnaRequest(@RequestBody rnaWebObject: RNAWebObject) {
+    fun rnaRequest(@RequestBody rnaWebObject: WebObject) : ResponseEntity<Any> {
 
+        val rnaSequenceDomainObject = prepDNASequence(rnaWebObject)
+        val output = RNARequestOrchestrator(rnaSequenceDomainObject, rnaWebObject.requestedTranslation).evaluateRNACodons()
+        val returnObject = DNAReturnObject(output, rnaSequenceDomainObject.unParsedSequence)
+
+        println(returnObject)
+        return ResponseEntity(returnObject, HttpStatus.OK)
     }
 
-    fun prepDNASequence(a: DNAWebObject): DNASequenceDomainObject {
+    fun prepDNASequence(a: WebObject): DNASequenceDomainObject {
 
         val length = a.translationSequence.length
         val modulo = length % 3

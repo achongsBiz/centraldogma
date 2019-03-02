@@ -1,25 +1,15 @@
 package acs.centraldogma
 
 import org.fest.assertions.Assertions.assertThat
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 class MainControllerTest {
-
-    @Before
-    fun setUp() {
-    }
-
-    @After
-    fun tearDown() {
-    }
 
     @Test
     fun `Prep sequence should correctly output parsed sections and unparsed sections`() {
 
         val a  = MainController()
-        val preparedSequence = a.prepDNASequence(DNAWebObject("ATGCGGTTAA", "dna"))
+        val preparedSequence = a.prepDNASequence(WebObject("ATGCGGTTAA", "dna"))
 
         assertThat(preparedSequence.length).isEqualTo(10)
         assertThat(preparedSequence.modulo).isEqualTo(1)
@@ -31,16 +21,20 @@ class MainControllerTest {
 
 
     @Test
-    fun `Codon is Parsed`() {
+    fun `DNA Codon is Parsed correctly`() {
 
-        val x = DNAWebObject("ATGCGGTTAA", "dna")
+        val x = WebObject("ATGCGGTTAA", "dna")
 
         val a  = MainController()
         a.dnaRequest(x)
+    }
 
+    @Test
+    fun `RNA Codon is Parsed correctly`() {
 
+        val x = WebObject("UUUGUUU", "amino")
 
-
-
+        val a  = MainController()
+        a.rnaRequest(x)
     }
 }
