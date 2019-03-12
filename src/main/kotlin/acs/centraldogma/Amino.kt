@@ -22,5 +22,6 @@ enum class Amino {
     Lys,
     Gly,
     Pro,
-    STOP
+    STOP,
+    NONE
 }

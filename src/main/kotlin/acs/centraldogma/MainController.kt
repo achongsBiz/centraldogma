@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class MainController {
     @PostMapping(value = "dna")
-    fun dnaRequest(@RequestBody webObject: WebObject) : ResponseEntity<Any> {
+    fun dnaRequest(@RequestBody webObject: WebObject) : ResponseEntity<DNAReturnObject> {
 
         val dnaSequenceDomainObject = prepDNASequence(webObject)
         val output = DNARequestOrchestrator(dnaSequenceDomainObject, webObject.requestedTranslation).evaluateDNACodons()
@@ -23,7 +23,7 @@ class MainController {
         val returnObject = DNAReturnObject(output, rnaSequenceDomainObject.unParsedSequence)
 
         println(returnObject)
-        return ResponseEntity(returnObject, HttpStatus.OK)
+        return ResponseEntity(returnObject.toString(), HttpStatus.OK)
     }
 
     fun prepDNASequence(a: WebObject): DNASequenceDomainObject {

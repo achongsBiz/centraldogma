@@ -12,11 +12,11 @@ class RNACodonUnitTest {
 
     @Test
     fun `Correct Translation from RNA to Amino Acid - First Base Uracil`() {
-//        val firstRNACodonTest = RNACodon("UUG")
-//        assertThat(firstRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
+        val firstRNACodonTest = RNACodon("UUU")
+        assertThat(firstRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
 
-//        val secondRNACodonTest = RNACodon("UUC")
-//        assertThat(secondRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
+        val secondRNACodonTest = RNACodon("UUC")
+        assertThat(secondRNACodonTest.outputAminoSequence).isEqualTo(Amino.Phe)
 
         val thirdRNACodonTest = RNACodon("UUA")
         assertThat(thirdRNACodonTest.outputAminoSequence).isEqualTo(Amino.Leu)

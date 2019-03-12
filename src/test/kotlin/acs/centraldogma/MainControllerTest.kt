@@ -26,15 +26,22 @@ class MainControllerTest {
         val x = WebObject("ATGCGGTTAA", "dna")
 
         val a  = MainController()
-        a.dnaRequest(x)
+        val y = a.dnaRequest(x)
+
+        println("hi")
+
     }
 
     @Test
     fun `RNA Codon is Parsed correctly`() {
 
-        val x = WebObject("UUUGUUU", "amino")
+        val x = WebObject("UUUGUUG", "amino")
 
-        val a  = MainController()
-        a.rnaRequest(x)
+        val a  = MainController().rnaRequest(x)
+
+        val y  = a.body
+
+        assertThat(a.statusCode.toString()).isEqualTo("200 OK")
+
     }
 }
