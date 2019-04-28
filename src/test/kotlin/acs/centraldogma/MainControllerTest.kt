@@ -1,5 +1,7 @@
 package acs.centraldogma
 
+import acs.centraldogma.web.MainController
+import acs.centraldogma.web.WebObject
 import org.fest.assertions.Assertions.assertThat
 import org.junit.Test
 

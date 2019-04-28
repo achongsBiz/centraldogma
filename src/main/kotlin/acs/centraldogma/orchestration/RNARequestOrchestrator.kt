@@ -1,7 +1,10 @@
-package acs.centraldogma
+package acs.centraldogma.orchestration
+
+import acs.centraldogma.domain.DNASequenceDomainObject
+import acs.centraldogma.domain.RNACodon
 
 class RNARequestOrchestrator (private val rnaSequenceDomainObject : DNASequenceDomainObject,
-                             private val requestedTranslation : String)  {
+                              private val requestedTranslation : String)  {
 
     fun evaluateRNACodons() : List<String> {
 

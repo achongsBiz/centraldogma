@@ -1,4 +1,7 @@
-package acs.centraldogma
+package acs.centraldogma.orchestration
+
+import acs.centraldogma.domain.DNASequenceDomainObject
+import acs.centraldogma.domain.DNACodon
 
 class DNARequestOrchestrator (private val dnaSequenceDomainObject : DNASequenceDomainObject,
                               private val requestedTranslation : String) {

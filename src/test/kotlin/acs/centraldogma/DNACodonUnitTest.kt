@@ -1,5 +1,7 @@
 package acs.centraldogma
 
+import acs.centraldogma.domain.Base
+import acs.centraldogma.domain.DNACodon
 import org.fest.assertions.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith

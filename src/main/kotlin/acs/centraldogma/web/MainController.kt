@@ -1,5 +1,9 @@
-package acs.centraldogma
+package acs.centraldogma.web
 
+import acs.centraldogma.domain.DNAReturnObject
+import acs.centraldogma.domain.DNASequenceDomainObject
+import acs.centraldogma.orchestration.DNARequestOrchestrator
+import acs.centraldogma.orchestration.RNARequestOrchestrator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

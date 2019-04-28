@@ -1,4 +1,4 @@
-package acs.centraldogma
+package acs.centraldogma.domain
 
 enum class Base {
 
