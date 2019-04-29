@@ -44,7 +44,7 @@ interface TranslationSyntax {
 
     fun translateToAmino(sequence : String) : Amino {
 
-        var amino = Amino.STOP
+        var amino = Amino.NONE
 
         val outputMatrix = mapOf(
                 "UUU" to Amino.Phe,
@@ -137,5 +137,4 @@ interface TranslationSyntax {
 
         return amino
     }
-
 }

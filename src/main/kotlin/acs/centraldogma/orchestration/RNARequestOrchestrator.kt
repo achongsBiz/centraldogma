@@ -25,5 +25,4 @@ class RNARequestOrchestrator (private val rnaSequenceDomainObject : DNASequenceD
 
         return results
     }
-
 }

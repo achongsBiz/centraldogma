@@ -1,6 +1,5 @@
 package acs.centraldogma.web
 
-import acs.centraldogma.domain.DNAReturnObject
 import acs.centraldogma.domain.DNASequenceDomainObject
 import acs.centraldogma.orchestration.DNARequestOrchestrator
 import acs.centraldogma.orchestration.RNARequestOrchestrator
@@ -10,27 +9,46 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class MainController {
-    @PostMapping(value = "dna")
-    fun dnaRequest(@RequestBody webObject: WebObject) : ResponseEntity<DNAReturnObject> {
+    @PostMapping(value = "/dna")
+    fun dnaRequest(@RequestBody dnaWebRequestObject: WebRequestObject) : ResponseEntity<WebReturnObject> {
 
-        val dnaSequenceDomainObject = prepDNASequence(webObject)
-        val output = DNARequestOrchestrator(dnaSequenceDomainObject, webObject.requestedTranslation).evaluateDNACodons()
-        val returnObject = DNAReturnObject(output, dnaSequenceDomainObject.unParsedSequence)
+        val dnaValidationLogic = fun(webRequestObject : WebRequestObject) : Boolean{
+            if (webRequestObject.requestedTranslation != "rna" && webRequestObject.requestedTranslation != "amino") {
+                return false
+            }
+            return true
+        }
+        if (!verifyWebObject(dnaValidationLogic, dnaWebRequestObject)) {
+
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+
+        val dnaSequenceDomainObject = prepDNASequence(dnaWebRequestObject)
+        val output = DNARequestOrchestrator(dnaSequenceDomainObject, dnaWebRequestObject.requestedTranslation).evaluateDNACodons()
+        val returnObject = WebReturnObject(output, dnaSequenceDomainObject.unParsedSequence)
         return ResponseEntity(returnObject,HttpStatus.OK)
     }
 
     @PostMapping(value = "/rna")
-    fun rnaRequest(@RequestBody rnaWebObject: WebObject) : ResponseEntity<Any> {
+    fun rnaRequest(@RequestBody rnaWebRequestObject: WebRequestObject) : ResponseEntity<WebReturnObject> {
 
-        val rnaSequenceDomainObject = prepDNASequence(rnaWebObject)
-        val output = RNARequestOrchestrator(rnaSequenceDomainObject, rnaWebObject.requestedTranslation).evaluateRNACodons()
-        val returnObject = DNAReturnObject(output, rnaSequenceDomainObject.unParsedSequence)
+        val rnaValidationLogic = fun(webRequestObject : WebRequestObject) : Boolean{
+            if (webRequestObject.requestedTranslation != "amino") {
+                return false
+            }
+            return true
+        }
+        if (!verifyWebObject(rnaValidationLogic, rnaWebRequestObject)) {
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
 
-        println(returnObject)
-        return ResponseEntity(returnObject.toString(), HttpStatus.OK)
+        val rnaSequenceDomainObject = prepDNASequence(rnaWebRequestObject)
+        val output = RNARequestOrchestrator(rnaSequenceDomainObject, rnaWebRequestObject.requestedTranslation).evaluateRNACodons()
+        val returnObject = WebReturnObject(output, rnaSequenceDomainObject.unParsedSequence)
+        return ResponseEntity(returnObject, HttpStatus.OK)
     }
 
-    fun prepDNASequence(a: WebObject): DNASequenceDomainObject {
+    fun prepDNASequence(a: WebRequestObject): DNASequenceDomainObject {
 
         val length = a.translationSequence.length
         val modulo = length % 3
@@ -48,5 +66,10 @@ class MainController {
                 unParsedLength = unParsedSequenceLength,
                 unParsedSequence = unParsedSequence,
                 parsedSequence = parsedSequence)
+    }
+
+    fun verifyWebObject(validationOperation : (WebRequestObject) -> Boolean, webRequestObject : WebRequestObject) : Boolean {
+
+        return validationOperation.invoke(webRequestObject)
     }
 }
