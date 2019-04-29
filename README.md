@@ -1,5 +1,4 @@
 # centraldogma
-DNA parser
 
 This is a SpringBoot application that serves as an educational demonstration of:
 
